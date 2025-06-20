@@ -1,0 +1,30 @@
+{
+  "name": "caching_proxy",
+  "version": "1.0.0",
+  "description": "A man-in-the-middle proxy server that can intercept and inspect unencrypted HTTPS traffic on your machine. It achieves this by dynamically creating SSL certificates for each domains it intercepts, completing a TLS handshake with the client, establishing a connection to the destination server, and tunneling the client request to the destination server, and the server response back to the client. For more information on proxies and tunneling see [MDN's Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Proxy_servers_and_tunneling).",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "eslint": "^9.27.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "dependencies": {
+    "@types/node": "^22.15.30",
+    "playwright": "^1.52.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthnyalxndr/node_mitm_proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthnyalxndr/node_mitm_proxy/issues"
+  }
+}
