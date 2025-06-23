@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@types/node": "^22.15.30",
-    "playwright": "^1.52.0"
   },
   "repository": {
     "type": "git",
