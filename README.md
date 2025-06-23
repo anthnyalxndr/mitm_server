@@ -1,4 +1,4 @@
-# Node MITM Proxy
+# MITM Server
 
 A TypeScript-based Man-in-the-Middle (MITM) proxy server that can intercept and inspect unencrypted HTTPS traffic on your machine. It achieves this by dynamically creating SSL certificates for each domains it intercepts, completing a TLS handshake with the client, establishing a connection to the destination server, and tunneling the client request to the destination server, and the server response back to the client. For more information on proxies and tunneling see MDN's article: [Proxy servers and tunneling](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Proxy_servers_and_tunneling).
 
