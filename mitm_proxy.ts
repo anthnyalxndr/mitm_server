@@ -103,7 +103,7 @@ type Hostname = string;
  * Main MITM (Man-in-the-Middle) proxy class that handles HTTP/HTTPS tunneling
  * with certificate generation and caching capabilities
  */
-export default class MitmProxy extends events.EventEmitter {
+export default class MitmServer extends events.EventEmitter {
     /** Root CA certificate file content */
     caCert: string;
     /** Root CA private key file content */
