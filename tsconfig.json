@@ -22,5 +22,5 @@
       "verbatimModuleSyntax": true,
       "types": ["node"]
     },
-    "include": ["mitm_proxy.ts"]
+    "include": ["mitm_server.ts"]
 }
