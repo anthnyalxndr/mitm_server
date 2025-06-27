@@ -59,8 +59,6 @@ export interface Options {
     caKeyPath: string;
     /** Path to OpenSSL configuration file */
     openSSLConfigPath: string;
-    /** Directory to store cached responses */
-    responseCache: string;
     /** Optional custom request handler function */
     requestHandler?: (req: http.IncomingMessage, res: Response) => void;
 }
@@ -122,8 +120,6 @@ export default class MitmServer extends events.EventEmitter {
     privateKeyPath: string;
     /** Port the proxy is listening on */
     port: number | null = null;
-    /** Directory for storing cached responses */
-    responseCache: string;
     /** Optional custom request handler function */
     requestHandler?: ((
         req: http.IncomingMessage,
@@ -156,7 +152,6 @@ export default class MitmServer extends events.EventEmitter {
         this.httpServer = http.createServer();
         this.openSSLConfigPath = options.openSSLConfigPath;
         this.privateKeyPath = path.resolve(this.certCache, "key.pem");
-        this.responseCache = options.responseCache;
         this.requestHandler = options.requestHandler;
         this.servers = new Map();
         this.serverMapAsync = new Map();
