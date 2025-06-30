@@ -359,7 +359,6 @@ export default class MitmServer extends events.EventEmitter {
      * Splits a request's host header into a hostname and port pair.
      * @param reqUrl - Request URL string
      * @returns Object containing hostname and port
-     * @private
      */
     splitHost(reqUrl: string | undefined): { hostname: string; port: number } {
         if (!reqUrl) throw new Error("Request URL is undefined");
