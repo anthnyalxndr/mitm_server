@@ -188,7 +188,7 @@ export default class MitmServer extends events.EventEmitter {
      * Binds event listeners for process signals to ensure graceful shutdown.
      * @private
      */
-    #bindListeners() {
+    private bindListeners() {
         process.on("SIGINT", this.shutdown.bind(this));
         process.on("SIGTERM", this.shutdown.bind(this));
     }
@@ -198,7 +198,7 @@ export default class MitmServer extends events.EventEmitter {
      * @param server - Server instance to shutdown
      * @private
      */
-    #shutdownServer(server: Promise<Server>) {
+    private shutdownServer(server: Promise<Server>) {
         try {
             server.then((s) => {
                 s.close(); // Stop incoming connections
