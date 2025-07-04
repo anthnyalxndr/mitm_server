@@ -201,9 +201,10 @@ export default class MitmServer extends events.EventEmitter {
     private shutdownServer(server: Promise<Server>) {
         try {
             server.then((s) => {
-                s.close(); // Stop incoming connections
-                const hostname = s.hostname;
-                if (hostname) this.serverMapAsync.delete(hostname);
+                    if (hostname) {
+                        this.serverMapAsync.delete(hostname);
+                        this.certCacheAsync.delete(hostname);
+                    }
                 s.closeAllConnections(); // Close remaining connections
             });
         } catch (e) {
@@ -420,19 +421,34 @@ export default class MitmServer extends events.EventEmitter {
         if (data.error instanceof Error) return cb();
         try {
             const { hostname } = data;
-            const certPath = path.resolve(this.certCache, hostname + "-cert.pem");
-            const keyPath = this.privateKeyPath;
-            fs.readFile(keyPath, (err, key) => {
-                if (err) {
-                    data.error = err;
-                    return cb();
-                }
-                fs.readFile(certPath, (err, cert) => {
-                    if (err) data.error = err;
-                    else data.context = { key, cert };
-                    cb();
+            const cachedContext = this.certCacheAsync.get(hostname);
+            if (cachedContext) {
+                cachedContext
+                    .then(c => data.context = c)
+                    .catch(err => data.error = err)
+                    .finally(cb);
+            } else {
+                const certPath = path.resolve(this.certCache, hostname + "-cert.pem");
+                const keyPath = this.privateKeyPath;
+                fs.readFile(keyPath, (err, key) => {
+                    if (err) {
+                        data.error = err;
+                        return cb();
+                    }
+                    fs.readFile(certPath, (err, cert) => {
+                        if (err) {
+                            data.error = err;
+                        } else {
+                            data.context = { key, cert };
+                            this.certCacheAsync.set(
+                                hostname, 
+                                Promise.resolve(data.context)
+                            );
+                        }
+                        cb();
+                    });
                 });
-            });
+            }
         } catch (err) {
             const cause = err instanceof Error ? err : new Error(String(err));
             data.error ??= new Error("Unable to get certificate.", { cause });
